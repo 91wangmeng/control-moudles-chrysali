@@ -1,0 +1,29 @@
+## 服务端口号
+server:
+  port: 8082
+## 服务名称
+spring:
+  application:
+    name: @env@-control
+##  配置中心
+  cloud:
+    config:
+      name: control
+      profile: @env@
+      discovery:
+        enabled: true
+        service-id: control-manger
+      label: master
+
+##  尤里卡配置
+eureka:
+  client:
+    service-url:
+      defaultZone:   http://localhost:${eureka.client.eureka-server-port}/eureka/
+    eureka-server-port: 8081
+logging:
+  level:
+    root: info
+management:
+  security:
+    enabled: false
