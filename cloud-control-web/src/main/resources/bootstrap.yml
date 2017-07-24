@@ -13,7 +13,7 @@ spring:
       discovery:
         enabled: true
         service-id: control-manger
-      label: master
+      label: home
 
 ##  尤里卡配置
 eureka:

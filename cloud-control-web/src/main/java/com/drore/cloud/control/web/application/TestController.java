@@ -55,6 +55,6 @@ public class TestController {
         stringObjectHashMap.put("c", "d");
         stringObjectHashMap.put("e", "f");
         CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> HttpRequestUtils.postJson("测试子线程", "http://localhost:8081/test", stringObjectHashMap));
-        return completableFuture.get();
+        return test;
     }
 }
