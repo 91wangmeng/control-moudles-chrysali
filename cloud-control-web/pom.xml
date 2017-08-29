@@ -14,11 +14,17 @@
         <profile>
             <id>dev</id>
             <properties>
-                <env>dev</env>
+                <env>master</env>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+        </profile>
+        <profile>
+            <id>hongyuan</id>
+            <properties>
+                <env>hongyuan</env>
+            </properties>
         </profile>
     </profiles>
     <dependencies>

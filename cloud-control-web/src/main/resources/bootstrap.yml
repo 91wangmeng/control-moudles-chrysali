@@ -13,13 +13,13 @@ spring:
       discovery:
         enabled: true
         service-id: control-manger-config
-      label: master
+      label: @env@
 
 ##  尤里卡配置
 eureka:
   client:
     service-url:
-      defaultZone:   http://172.16.11.182:${eureka.client.eureka-server-port}/eureka/
+      defaultZone:   http://192.168.11.130:${eureka.client.eureka-server-port}/eureka/
     eureka-server-port: 8081
 
 logging:

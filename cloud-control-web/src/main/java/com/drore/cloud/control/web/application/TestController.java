@@ -1,5 +1,6 @@
 package com.drore.cloud.control.web.application;
 
+import com.drore.cloud.control.manger.common.base.business.TokenUtils;
 import com.drore.cloud.control.manger.common.cache.service.RedisBuilder;
 import com.drore.cloud.control.manger.common.http.utils.HttpRequestUtils;
 import com.drore.cloud.control.manger.common.log.annotations.ServerInvokeLog;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -29,10 +31,8 @@ import java.util.concurrent.ExecutionException;
 @RefreshScope
 public class TestController {
     private static Logger LOGGER = LoggerFactory.getLogger(TestController.class);
-    @Value("${a.b}")
-    private String test;
-    @Value("${spring.redis.host}")
-    private String host;
+    @Resource
+    private TokenUtils tokenUtils;
     @Resource
     private RedisBuilder redisBuilder;
 
@@ -45,13 +45,8 @@ public class TestController {
      */
     @RequestMapping("/test")
     @ServerInvokeLog(serverDescription = "管控系统测试接口", logType = LogType.API_LOG_TYPE, invoker = {InvokerType.CONTROL_WEB_INVOKER_TYPE, InvokerType.CONTROL_APP_INVOKER_TYPE})
-    public String test() throws ExecutionException, InterruptedException {
-        redisBuilder.set("a", "b");
-        HashMap<String, Object> stringObjectHashMap = new HashMap<>();
-        stringObjectHashMap.put("a", "b");
-        stringObjectHashMap.put("c", "d");
-        stringObjectHashMap.put("e", "f");
-        CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> HttpRequestUtils.postJson("测试子线程", "http://localhost:8081/test", stringObjectHashMap));
-        return test;
+    public String test(@RequestParam String token) throws ExecutionException, InterruptedException {
+        tokenUtils.setToken(token);
+        return tokenUtils.getToken();
     }
 }
